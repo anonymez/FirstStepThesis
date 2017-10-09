@@ -1,3 +1,5 @@
 # FirstStepThesis
 #A first upload of extraction files, getting data from virtual environmnent.
-#Three file occur, two with random and exemplification extractions, and one simulating the basics arguments of CSC-1.1 (from CIS)
+#c_getVM does random and exemplification extractions, comments are in the file.
+#c_getVM2 get all users and their permissions.
+#csc1 tries to simulate the basics arguments of CSC-1.1 (from CIS)

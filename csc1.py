@@ -40,6 +40,7 @@ def main():
                                pwd=args.password,
                                port=int(args.port))
         atexit.register(Disconnect, si)
+        print("No SSL Connection: warning!!")
     except vim.fault.InvalidLogin:
         raise SystemExit("Unable to connect to host "
                          "with supplied credentials.")
@@ -99,8 +100,21 @@ def main():
 
         for s in pgs:
             switch = s.vswitch
+#            print("prova2", switch)
+            #####################################################################################
+            #CIS 7.1
+            #CIS 7.2
+            #CIS 7.3
+            #####################################################################################
+            print("prova2", s.computedPolicy)
             key = s.key
             port = [p.mac for p in s.port]
+            #####################################################################################
+            #CIS 7.4
+            #CIS 7.5 (partial: document needed)
+            #CIS 7.6 (partial: VGT needed)
+            #####################################################################################
+            print("VLANID:", s.spec.vlanId)
             print("KEY: {} ->".format(key)) ,
             print("SWITCH: {} ->".format(switch)),
             print("MAC: {}".format(port))
@@ -123,6 +137,8 @@ def main():
 
 #        fw = host.config.storageDevice
 #        print(fw)
+
+
 
 
 

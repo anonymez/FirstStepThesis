@@ -46,30 +46,37 @@ def main():
                          "with supplied credentials.")
 
     content = si.RetrieveContent()
-#    print(vim.ServiceInstance.RetrieveContent(si))
 
-    ###########################################
-    #Get CSC 1.1 information: search VMs
-    # by network(s), for each foun
-    #get informations.
-    # Note: unable to find network informmation
-    #on the vm, like ip address
-    ###########################################
+    ###############################
+    #Get info about the system host
+    #privilege: read-only
+    ###############################
+    print("##########################################")
+    print("Get info about the system host")
+    print("##########################################")
+    hyp = content.about
+    print(hyp)
+
     dataStore = content.rootFolder.childEntity
     for data in dataStore:
-        vm = data.vmFolder.childEntity
-        for virtual in vm:
-#            print("Hosts: ", virtual.summary)
-            #####################################################################################
-            # CIS 8.2.1 to 8.2.5
-            #####################################################################################
-            print("Name: " + virtual.config.name)
-            #####################################################################################
-            # CIS 8.2.6 and 8.2.7- connectable.allowGuestControl
-            #####################################################################################
-            print("Vm num: ", virtual.config.hardware)
-            print(dir(virtual))
-           # print(virtual.config.files)
+        print(data)
+        vm = data.hostFolder.childEntity
+        for host in vm:
+            hostConfig = host.host
+            for tool in hostConfig:
+                #####################################################################################
+                # CIS 4.1
+                #####################################################################################
+                print(tool.configManager.authenticationManager.info)
+                print(tool.configManager.serviceSystem.serviceInfo)
+
+                print(tool.configManager.powerSystem.capability)
+                print(tool.configManager.powerSystem.info)
+
+                print(tool.configManager)
+
+
+
 
 
 

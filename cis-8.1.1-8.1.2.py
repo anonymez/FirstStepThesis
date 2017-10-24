@@ -69,6 +69,13 @@ def main():
                     infoFile = infoSearch.info
 #                    infoSearch.SetTaskState(state = "running")
 #                    infoSearch.SetTaskState(state = "success")
+                    fileSizeName = v.layoutEx.file
+                    for fileSearch in fileSizeName:
+#                        print(fileSearch)
+                         s = ".vmx"
+                         sNot = ".vmxf"
+                         if s in fileSearch.name and sNot not in fileSearch.name:
+                            print("################", fileSearch)
                     #####################################################################################
                     # CIS 8.1.1
                     #####################################################################################

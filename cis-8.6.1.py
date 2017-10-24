@@ -61,14 +61,14 @@ def main():
         for virtual in vm:
 #            print("Hosts: ", virtual.summary)
             #####################################################################################
-            # CIS 8.2.1 to 8.2.5
+            # CIS 8.6.1 - look for backing-diskMode
             #####################################################################################
-            print("Name: " + virtual.config.name)
-            #####################################################################################
-            # CIS 8.2.6 and 8.2.7- connectable.allowGuestControl
-            #####################################################################################
-            print("Vm num: ", virtual.config.hardware)
-            print(dir(virtual))
+            device =  virtual.config.hardware.device
+#            print(device)
+            for devices in device:
+                if("Hard disk" in devices.deviceInfo.label):
+                    print(devices)
+#            print(dir(virtual))
            # print(virtual.config.files)
 
 

@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -55,18 +56,20 @@ def main():
         #####################################################################################
         # CIS 2.1 - need to select a  server to let it appears in the list
         #####################################################################################
-        configuration = hostAnalisys.host.host.configManager
-        print(configuration.dateTimeSystem.dateTimeInfo)
+        #configuration = hostAnalisys.host.host.configManager
+        #print(configuration.dateTimeSystem.dateTimeInfo)
+        print('cis 2.1 passed: '),
+        print(cisClasses.cis_2_1(host))
         #####################################################################################
         # CIS 2.2
         #####################################################################################
-        print(configuration.firewallSystem.firewallInfo)
+        print(hostAnalisys.host.host.configManager.firewallSystem.firewallInfo)
 
         #####################################################################################
         # CIS 2.5
         #####################################################################################
-        print(configuration.snmpSystem.configuration)
-        print(configuration.snmpSystem.limits)
+        #print(configuration.snmpSystem.configuration)
+        #print(configuration.snmpSystem.limits)
 
 if __name__ == "__main__":
     main()

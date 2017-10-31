@@ -56,14 +56,16 @@ def main():
         #####################################################################################
         # CIS 2.1 - need to select a  server to let it appears in the list
         #####################################################################################
-        #configuration = hostAnalisys.host.host.configManager
+        configuration = hostAnalisys.host.host.configManager
         #print(configuration.dateTimeSystem.dateTimeInfo)
         print('cis 2.1 passed: '),
         print(cisClasses.cis_2_1(host))
         #####################################################################################
         # CIS 2.2
         #####################################################################################
-        print(hostAnalisys.host.host.configManager.firewallSystem.firewallInfo)
+#        print(hostAnalisys.host.host.configManager.firewallSystem.firewallInfo.ruleset)
+        print('cis_2_2_passed: '),
+        print(cisClasses.cis_2_2(host, hostAnalisys.host.host.configManager.firewallSystem.firewallInfo.ruleset))
 
         #####################################################################################
         # CIS 2.5

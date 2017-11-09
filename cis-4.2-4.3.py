@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -60,6 +61,8 @@ def main():
         # CIS 4.2
         #####################################################################################
             if d.key == "Security.PasswordQualityControl":
+                print("passQualityContr: "),
+                print(cisClasses.cis_4_2(d))
                 print(d)
         #####################################################################################
         # CIS 4.3

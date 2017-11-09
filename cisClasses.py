@@ -91,3 +91,46 @@ class cis_3_3:
     def __str__(self):
         return str(self.cis_3_3_passed)
 
+#input:
+#logDirKey: a vim.option.OptionValue managed object
+#if parsed value parameters equal cis, then cis has passed
+class cis_4_2:
+    def __init__(self, logDirKey):
+        self.cis_4_2_passed = False
+        valueString = logDirKey.value
+        if 'retry=' in valueString:
+            retryIndex = valueString.index('retry=')
+            retryIndexLength = len('retry=')
+            retryTimesPosition = retryIndex + retryIndexLength
+            if int(valueString[retryTimesPosition]) < 5:
+                if 'min=' in valueString:
+                    minIndex = valueString.index('min=')
+                    minIndexLength = len('min=')
+                    minPosition = minIndex + minIndexLength
+                    minN0Value = ''
+                    minN1Value = ''
+                    minN2Value = ''
+                    minN3Value = ''
+                    minN4Value = ''
+                    commaCounter = 0
+                    while (minPosition < len(valueString)):
+                        if(valueString[minPosition] == ','):
+                            commaCounter = commaCounter + 1
+                            minPosition = minPosition + 1
+                        if(commaCounter < 1):
+                            minN0Value = minN0Value + valueString[minPosition]
+                        elif(commaCounter < 2):
+                            minN1Value = minN1Value + valueString[minPosition]
+                        elif(commaCounter < 3):
+                            minN2Value = minN2Value + valueString[minPosition]
+                        elif(commaCounter < 4):
+                            minN3Value = minN3Value + valueString[minPosition]
+                        else:
+                            minN4Value = minN4Value + valueString[minPosition]
+                        minPosition = minPosition + 1
+
+                    if minN0Value == 'disabled' and minN1Value == 'disabled' and minN2Value == 'disabled'\
+                            and minN3Value == 'disabled' and minN4Value != 'disabled' and int(minN4Value) >= 14:
+                        self.cis_4_2_passed = True
+    def __str__(self):
+        return str(self.cis_4_2_passed)

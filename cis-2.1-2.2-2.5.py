@@ -70,8 +70,10 @@ def main():
         #####################################################################################
         # CIS 2.5
         #####################################################################################
-        #print(configuration.snmpSystem.configuration)
-        #print(configuration.snmpSystem.limits)
+#        print(configuration.snmpSystem.configuration)
+#        print(configuration.snmpSystem.limits)
+        print('cis_2_3_passed: '),
+        print(cisClasses.cis_2_3(host, used = True, maxTrap = 3))
 
 if __name__ == "__main__":
     main()

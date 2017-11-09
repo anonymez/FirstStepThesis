@@ -45,11 +45,22 @@ class cis_2_2:
     def __str__(self):
         return str(self.cis_2_2_passed)
 
+#input:
+#host: a host managed object
+#used: boolean, wether SNMP is used or not
+#maxTrap: int, the nmax number of allowed destinations for communications
+#if SNMP is not used, it should be disabled;
+#if SNMP is used, trap number and configuration should be correct
+#configuration cannot be checked, the library does not extract this value
 class cis_2_3:
-    def __init__(self, host, snmpList = None):
+    def __init__(self, host, used = False, maxTrap = int):
         self.cis_2_3_passed = False
-        configuration = host.QueryHostConnectionInfo().host.host.configManager.dateTimeSystem.dateTimeInfo.ntpConfig
-        if configuration == None:
-            cis_2_3_passed = False
+        configuration = host.QueryHostConnectionInfo().host.host.configManager.snmpSystem.configuration.enabled
+        if configuration == False and used == False:
+            self.cis_2_3_passed = True
+        elif configuration == False and used == True:
+            maxTrapDestinations = host.QueryHostConnectionInfo().host.host.configManager.snmpSystem.limits.maxTrapDestinations
+            if maxTrapDestinations == maxTrap:
+                self.cis_2_3_passed = True
     def __str__(self):
         return str(self.cis_2_3_passed)

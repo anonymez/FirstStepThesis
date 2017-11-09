@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -61,18 +62,22 @@ def main():
         # CIS 3.2
         #####################################################################################
             if d.key == "Syslog.global.logDir":
-                print(d)
+                print('cis_3_2_passed: '),
+                print(cisClasses.cis_3_2(d))
+#                print("logDir: ", d)
         #####################################################################################
         # CIS 3.3
         #####################################################################################
             if d.key == "Syslog.global.logHost":
-                print(d)
+                print('cis_3_3_passed: '),
+                print(cisClasses.cis_3_3(d))
+#                print("logHost", d)
 #        print(configuration.advancedOption.supportedOption)
         #####################################################################################
         # CIS 4.2
         #####################################################################################
             if d.key == "Security.PasswordQualityControl":
-                print(d)
+                print("passSecCont", d)
         #####################################################################################
         # CIS 4.3
         #####################################################################################
@@ -127,7 +132,7 @@ def main():
             #####################################################################################
             if o.key == "DCUI.Access":
                 print(o)
-        print(host.config)
+#        print(host.config)
 
 #        print(configuration.serviceSystem.serviceInfo)
 

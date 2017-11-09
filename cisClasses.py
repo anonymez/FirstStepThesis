@@ -58,9 +58,36 @@ class cis_2_3:
         configuration = host.QueryHostConnectionInfo().host.host.configManager.snmpSystem.configuration.enabled
         if configuration == False and used == False:
             self.cis_2_3_passed = True
-        elif configuration == False and used == True:
+        elif configuration == True and used == True:
             maxTrapDestinations = host.QueryHostConnectionInfo().host.host.configManager.snmpSystem.limits.maxTrapDestinations
             if maxTrapDestinations == maxTrap:
                 self.cis_2_3_passed = True
     def __str__(self):
         return str(self.cis_2_3_passed)
+
+#input
+#logDirKey: a vim.option.OptionValue managed object
+#datastore: the name of the non-persistent datastore folder the logDir is in
+#if the word is in the path, cis is not passed
+class cis_3_2:
+    def __init__(self, logDirKey, datastore = str):
+        self.cis_3_2_passed = False
+        if 'scratch' in logDirKey.value:
+            self.cis_3_2_passed = False
+        else:
+            self.cis_3_2_passed = True
+    def __str__(self):
+        return str(self.cis_3_2_passed)
+
+#input:
+#logDirKey: a vim.option.OptionValue managed object
+#server: the name of the logHost server
+#if names are the same, cis has passed
+class cis_3_3:
+    def __init__(self , logDirKey , syslogServer = str):
+        self.cis_3_3_passed = False
+        if logDirKey.value == syslogServer:
+            self.cis_3_3_passed = True
+    def __str__(self):
+        return str(self.cis_3_3_passed)
+

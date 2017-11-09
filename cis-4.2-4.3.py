@@ -63,7 +63,7 @@ def main():
             if d.key == "Security.PasswordQualityControl":
                 print("passQualityContr: "),
                 print(cisClasses.cis_4_2(d))
-                print(d)
+#                print(d)
         #####################################################################################
         # CIS 4.3
         #####################################################################################

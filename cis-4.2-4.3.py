@@ -61,13 +61,15 @@ def main():
         # CIS 4.2
         #####################################################################################
             if d.key == "Security.PasswordQualityControl":
-                print("passQualityContr: "),
+                print("passQualityContr [cis 4.2]: "),
                 print(cisClasses.cis_4_2(d))
 #                print(d)
         #####################################################################################
         # CIS 4.3
         #####################################################################################
-        print(configuration.authenticationManager.info)
+        print('activeDomainContr [cis 4.3]: '),
+        print(cisClasses.cis_4_3(host))
+#        print(configuration.authenticationManager.info)
 
 
 #        print(configuration.serviceSystem.serviceInfo)

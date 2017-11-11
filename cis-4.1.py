@@ -75,11 +75,5 @@ def main():
 
                 print(tool.configManager)
 
-
-
-
-
-
-
 if __name__ == "__main__":
     main()

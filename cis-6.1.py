@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -58,8 +59,10 @@ def main():
                 #####################################################################################
                 # CIS 6.1
                 #####################################################################################
-                print(chap.authenticationProperties)
-                print(chap)
+                print('Bidirectional Chap Auth [cis 6.1]: '),
+                print(cisClasses.cis_6_1(h))
+#                print(chap.authenticationProperties)
+#                print(chap)
 
 
 if __name__ == "__main__":

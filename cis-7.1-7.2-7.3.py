@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -58,38 +59,55 @@ def main():
             switch = s.vswitch
             #####################################################################################
             #CIS 7.1
+            #####################################################################################
+            print('Forged Transmit Policy [cis 7.1]: '),
+            print(cisClasses.cis_7_1(s))
+            #####################################################################################
             #CIS 7.2
+            #####################################################################################
+            print('MAC Address Change Policy [cis 7.2]: ') ,
+            print(cisClasses.cis_7_2(s))
+            #####################################################################################
             #CIS 7.3
             #####################################################################################
-            print("CIS 7.1, 7.2, 7.3")
+            print('Promiscuous Mode Policy [cis 7.3]: ') ,
+            print(cisClasses.cis_7_3(s))
+
             policy = s.computedPolicy
             security = policy.security
             nicTeaming = policy.nicTeaming
 #            print(s.computedPolicy)
-            print("activeNic: "),
-            activeNic = nicTeaming.nicOrder.activeNic
-            for active in activeNic:
-                print(active .format(nicTeaming.nicOrder.activeNic)),
-            print("")
-            print("Policy: {}" .format(nicTeaming.policy))
-            print("Forged transmit: {}" .format(security.forgedTransmits))
-            print("MAC address change: {}" .format(security.macChanges))
-            print("Promiscuous mode: {}" .format(security.allowPromiscuous))
-            key = s.key
-            port = [p.mac for p in s.port]
+#            print("activeNic: "),
+#            activeNic = nicTeaming.nicOrder.activeNic
+#            for active in activeNic:
+#                print(active .format(nicTeaming.nicOrder.activeNic)),
+#            print("")
+#            print("Policy: {}" .format(nicTeaming.policy))
+#            print("Forged transmit: {}" .format(security.forgedTransmits))
+#            print("MAC address change: {}" .format(security.macChanges))
+#            print("Promiscuous mode: {}" .format(security.allowPromiscuous))
+ #           key = s.key
+ #           port = [p.mac for p in s.port]
             #####################################################################################
             #CIS 7.4
+            #####################################################################################
+            print("Native Vlan [cis 7.4]: ") ,
+            print(cisClasses.cis_7_4(s))
+            #####################################################################################
             #CIS 7.5 (partial: document needed)
+            #####################################################################################
+            #####################################################################################
             #CIS 7.6 (partial: VGT needed)
             #####################################################################################
-            print("VLANID: {}" .format(s.spec.vlanId))
-            if(s.spec.vlanId == 4095):
-                print("##################")
-                print("VGT mode - warning")
-                print("##################")
-            print("KEY: {} ->".format(key))
-            print("SWITCH: {} ->".format(switch))
-            print("MAC: {}".format(port))
+            print("Vlan 4095 [cis 7.6 not scored]: "),
+            print(cisClasses.cis_7_6(s))
+#            if(s.spec.vlanId == 4095):
+#                print("##################")
+#                print("VGT mode - warning")
+#                print("##################")
+#            print("KEY: {} ->".format(key))
+#            print("SWITCH: {} ->".format(switch))
+#            print("MAC: {}".format(port))
 
 
 

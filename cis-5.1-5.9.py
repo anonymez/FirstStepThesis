@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -57,33 +58,31 @@ def main():
         # CIS 5.1
         #####################################################################################
         hostService = configuration.serviceSystem.serviceInfo.service
-        print(hostService)
+#        print(hostService)
         for service in hostService:
             #####################################################################################
             # CIS 5.1
             #####################################################################################
             if service.key == "DCUI":
-                print(service)
+                print('service DCUI [cis 5.1]: '),
+                print(cisClasses.cis_5_1(service))
             #####################################################################################
             # CIS 5.2
             #####################################################################################
             if service.key == "TSM":
-                print(service)
+                print('service TSM [cis 5.2]: '),
+                print(cisClasses.cis_5_2(service))
             #####################################################################################
             # CIS 5.3
             #####################################################################################
             if service.key == "TSM-SSH":
-                print(service)
-            #####################################################################################
-            # CIS 5.4
-            #####################################################################################
-            if service.key == "sfcbd-watchdog":
-                print(service)
+                print('service TSM-SSH [cis 5.3]: '),
+                print(cisClasses.cis_5_3(service))
 
         #####################################################################################
         # CIS 5.5 - not valid: should be ignored; supported only in Virtual Center
         #####################################################################################
-        print(host.config.lockdownMode)
+#        print(host.config)
 
         option = host.config.option
         for o in option:
@@ -91,18 +90,20 @@ def main():
             # CIS 5.7
             #####################################################################################
             if o.key == "UserVars.ESXiShellInteractiveTimeOut":
-                print(o)
+                print('option ESXiShellInteractiveTimeOut [cis 5.7]: '),
+                print(cisClasses.cis_5_7(o))
             #####################################################################################
             # CIS 5.8
             #####################################################################################
             if o.key == "UserVars.ESXiShellTimeOut":
-                print(o)
+                print('option ESXiShellTimeOut [cis 5.8]: '),
+                print(cisClasses.cis_5_8(o))
             #####################################################################################
             # CIS 5.9
             #####################################################################################
             if o.key == "DCUI.Access":
-                print(o)
-        print(host.config)
+                print('option DCUI.Acces [cis 5.9 not scored]: '),
+                print(cisClasses.cis_5_9(o))
 
 #        print(configuration.serviceSystem.serviceInfo)
 

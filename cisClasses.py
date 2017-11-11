@@ -134,3 +134,148 @@ class cis_4_2:
                         self.cis_4_2_passed = True
     def __str__(self):
         return str(self.cis_4_2_passed)
+
+#input:
+#host: a host
+#domain: the domain of the ActiveDirectory
+#if ActiveDirectory is in and parameters are correct, then cis has passed
+#########################################################################
+#to check: joinedDomain, trustedDomain's list, domainMembershopStatus
+#to check(2): localAuthenticationInfo, if enable need to be true
+#########################################################################
+class cis_4_3:
+    def __init__(self, host, domain = ''):
+        self.cis_4_3_passed = False
+        hostAnalisys = host.QueryHostConnectionInfo()
+        configuration = hostAnalisys.host.host.configManager
+        activeDomain = configuration.authenticationManager.info
+        for authInfo in activeDomain.authConfig:
+            if ('AxctiveDirectoryInfo' in authInfo.__class__.__name__ and authInfo.enabled == True):
+                self.cis_4_3_passed = True
+
+    def __str__(self):
+            return str(self.cis_4_3_passed)
+
+#cis 5.1 to 5.3
+#input:
+#service: the service the class is looking for
+#policy values: 'automatic' -> start and stop with firewall ports,
+#               'on'        -> start and stop with host
+#               'off'       -> start and stop manually
+class cis_5_1:
+    def __init__(self, service):
+        self.cis_5_1_passed = False
+        if service.policy == 'off':
+            self.cis_5_1_passed = True
+    def __str__(self):
+        return str(self.cis_5_1_passed)
+class cis_5_2:
+    def __init__(self, service):
+        self.cis_5_2_passed = False
+        if service.policy == 'off':
+            self.cis_5_2_passed = True
+    def __str__(self):
+        return str(self.cis_5_2_passed)
+class cis_5_3:
+    def __init__(self, service):
+        self.cis_5_3_passed = False
+        if service.policy == 'off':
+            self.cis_5_3_passed = True
+    def __str__(self):
+        return str(self.cis_5_3_passed)
+
+#cis 5.7 to 5.9
+#input:
+#option: the option the cis is looking for
+class cis_5_7:
+    def __init__(self, option):
+        self.cis_5_7_passed = False
+        if option.value <= 300:
+            self.cis_5_7_passed = True
+    def __str__(self):
+        return str(self.cis_5_7_passed)
+class cis_5_8:
+    def __init__(self , option):
+        self.cis_5_8_passed = False
+        if option.value <= 3600:
+            self.cis_5_8_passed = True
+    def __str__(self):
+        return str(self.cis_5_8_passed)
+class cis_5_9:
+    def __init__(self , option):
+        self.cis_5_9_passed = option.value
+    def __str__(self):
+        return str(self.cis_5_9_passed)
+
+#input:
+#host: the host the cis is looking for
+#mutualChapAuthenticationType: chapRequired   -> chap can be required by the target
+#                              chapProhibited -> chap can be prohibited by the target
+#                              chapProhibited -> chap not allowed (see authChap to be set false)
+#                              chapPreferred  -> default auth with chap
+###############################################################################################
+#chapPreferred to be checked in mutualChapAuth
+###############################################################################################
+
+class cis_6_1:
+    def __init__(self , host):
+        self.cis_6_1_passed = False
+        storage = host.config.storageDevice.hostBusAdapter
+        for s in storage:
+            if s.__class__.__name__ == 'vim.host.InternetScsiHba':
+#                print(s)
+                chapCap = s.authenticationCapabilities
+                chapProp = s.authenticationProperties
+                if(chapCap.chapAuthSettable == True and chapCap.mutualChapSettable == True
+                   and chapProp.chapAuthEnabled == True and chapProp.chapName != ''
+                   and chapProp.mutualChapName != ''):
+                       self.cis_6_1_passed = True
+    def __str__(self):
+        return str(self.cis_6_1_passed)
+
+#cis 7.1 to 7.3
+#input:
+#portGroup: the port the cis is looking for
+class cis_7_1:
+    def __init__(self , portGroup):
+        self.cis_7_1_passed = False
+        forgedTransmit = portGroup.computedPolicy.security
+        if (forgedTransmit.forgedTransmits == False):
+            self.cis_7_1_passed = True
+    def __str__(self):
+        return str(self.cis_7_1_passed)
+
+class cis_7_2:
+    def __init__(self , portGroup):
+        self.cis_7_2_passed = False
+        macAddresChange = portGroup.computedPolicy.security
+        if (macAddresChange.macChanges == False):
+            self.cis_7_2_passed = True
+    def __str__(self):
+        return str(self.cis_7_2_passed)
+
+class cis_7_3:
+    def __init__(self , portGroup):
+        self.cis_7_3_passed = False
+        promiscuousMode = portGroup.computedPolicy.security
+        if (promiscuousMode.allowPromiscuous == False):
+            self.cis_7_3_passed = True
+    def __str__(self):
+        return str(self.cis_7_3_passed)
+
+class cis_7_4:
+    def __init__(self , portGroup, nativeVlan = 1):
+        self.cis_7_4_passed = False
+        vlan = portGroup.spec.vlanId
+        if(vlan != nativeVlan):
+            self.cis_7_4_passed = True
+    def __str__(self):
+        return str(self.cis_7_4_passed)
+class cis_7_6:
+    def __init__(self , portGroup):
+        vlan = portGroup.spec.vlanId
+        self.cis_7_6_passed = str(vlan)
+        if(vlan == 4095):
+            self.cis_7_6_passed = self.cis_7_6_passed + (' ok only for VGT mode')
+    def __str__(self):
+        return str(self.cis_7_6_passed)

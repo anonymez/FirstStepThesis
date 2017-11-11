@@ -70,10 +70,13 @@ def main():
         #####################################################################################
         # CIS 2.5
         #####################################################################################
+#        conf = configuration.snmpSystem.configuration
+#        conf.enabled = False
+#        used = configuration.snmpSystem.ReconfigureSnmpAgent(conf)
 #        print(configuration.snmpSystem.configuration)
 #        print(configuration.snmpSystem.limits)
         print('cis_2_3_passed: '),
-        print(cisClasses.cis_2_3(host, used = True, maxTrap = 3))
+        print(cisClasses.cis_2_3(host))
 
 if __name__ == "__main__":
     main()

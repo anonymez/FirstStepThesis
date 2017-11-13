@@ -5,6 +5,7 @@ from pyVim.connect import SmartConnectNoSSL, Disconnect
 import pyVmomi
 from pyVmomi import vim
 import inspect
+import cisClasses
 
 
 
@@ -67,8 +68,10 @@ def main():
             #####################################################################################
             # CIS 8.2.6 and 8.2.7- connectable.allowGuestControl
             #####################################################################################
-            print("Vm num: ", virtual.config.hardware)
-            print(dir(virtual))
+#            print("Vm num: ", virtual.config.hardware)
+            dictionary = cisClasses.cis_8_2_2_to_8_2_7(virtual)
+            print(dictionary)
+#            print(dir(virtual))
            # print(virtual.config.files)
 
 

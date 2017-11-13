@@ -279,3 +279,31 @@ class cis_7_6:
             self.cis_7_6_passed = self.cis_7_6_passed + (' ok only for VGT mode')
     def __str__(self):
         return str(self.cis_7_6_passed)
+
+class cis_8_2_2_to_8_2_7:
+    def __init__(self, virtualMachine, needed = False):
+        self.cis_8_2_2_passed = False
+        self.cis_8_2_3_passed = False
+        deviceList = virtualMachine.config.hardware.device
+        floppyCounter = 0
+        cdCounter = 0
+        for device in deviceList:
+            if(device.connectable != None):
+                startConnected = device.connectable.startConnected
+                allowGuestControl = device.connectable.allowGuestControl
+                connected = device.connectable.connected
+            if('VirtualCdrom' in device.__class__.__name__):
+                cdCounter = 1
+                if(startConnected == False and allowGuestControl == False and connected == False):
+                    self.cis_8_2_2_passed = True
+            elif('Floppy' in device.__class__.__name__):
+                floppyCounter = 1
+                if (startConnected == False and allowGuestControl == False and connected == False):
+                    self.cis_8_2_3_passed = True
+        if(cdCounter == 0):
+            self.cis_8_2_2_passed = True
+        if(floppyCounter == 0):
+            self.cis_8_2_3_passed = True
+
+    def __repr__(self):
+        return repr(['cis 8.2.2: ' + str(self.cis_8_2_2_passed), 'cis 8.2.1: ' + str(self.cis_8_2_3_passed)])

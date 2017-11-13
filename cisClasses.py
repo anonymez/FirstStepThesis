@@ -307,3 +307,18 @@ class cis_8_2_2_to_8_2_7:
 
     def __repr__(self):
         return repr(['cis 8.2.2: ' + str(self.cis_8_2_2_passed), 'cis 8.2.1: ' + str(self.cis_8_2_3_passed)])
+
+class cis_8_4_x:
+    def __init__(self, cisNeeded, key, default = False):
+        self.cisNeeded = cisNeeded
+        self.cis_8_4_x_passed = False
+        if(key.value == str(default).lower()):
+            self.cis_8_4_x_passed = True
+    def __str__(self):
+        return str(self.cisNeeded + ': ' + str(self.cis_8_4_x_passed))
+
+class notFound:
+    def __init__(self, cisNeeded):
+        self.cisNeeded = cisNeeded
+    def __str__(self):
+        return str(self.cisNeeded + ': ' + str(False))

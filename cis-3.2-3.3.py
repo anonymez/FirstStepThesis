@@ -56,6 +56,7 @@ def main():
         configuration = hostAnalisys.host.host.configManager
 
         logDir = configuration.advancedOption.setting
+        cis = { 'cis_8_3_2': 0 , 'cis_8_3_3': 0 }
         for d in logDir:
 #            print(d)
         #####################################################################################
@@ -64,6 +65,7 @@ def main():
             if d.key == "Syslog.global.logDir":
                 print('cis_3_2_passed: '),
                 print(cisClasses.cis_3_2(d))
+                cis['cis_8_3_2'] = 1
 #                print("logDir: ", d)
         #####################################################################################
         # CIS 3.3
@@ -71,6 +73,7 @@ def main():
             if d.key == "Syslog.global.logHost":
                 print('cis_3_3_passed: '),
                 print(cisClasses.cis_3_3(d))
+                cis['cis_8_3_3'] = 1
 #                print("logHost", d)
 #        print(configuration.advancedOption.supportedOption)
         #####################################################################################
@@ -123,6 +126,9 @@ def main():
             if o.key == "DCUI.Access":
                 print(o)
 #        print(host.config)
+    for key in cis:
+        if (cis[key] == 0):
+            print(cisClasses.notFound(key))
 
 #        print(configuration.serviceSystem.serviceInfo)
 

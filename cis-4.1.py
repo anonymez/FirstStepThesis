@@ -74,6 +74,8 @@ def main():
                 print(tool.configManager.powerSystem.info)
 
                 print(tool.configManager)
+                print(dir(tool.configManager.imageConfigManager))
+                print(tool.configManager.kernelModuleSystem.QueryModules())
 
 if __name__ == "__main__":
     main()

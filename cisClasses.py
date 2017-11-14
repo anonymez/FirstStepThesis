@@ -74,6 +74,8 @@ class cis_3_2:
         self.cis_3_2_passed = False
         if 'scratch' in logDirKey.value:
             self.cis_3_2_passed = False
+        elif datastore in logDirKey.value:
+            self.cis_3_2_passed = False
         else:
             self.cis_3_2_passed = True
     def __str__(self):
@@ -141,7 +143,7 @@ class cis_4_2:
 #if ActiveDirectory is in and parameters are correct, then cis has passed
 #########################################################################
 #to check: joinedDomain, trustedDomain's list, domainMembershopStatus
-#to check(2): localAuthenticationInfo, if enable need to be true
+#to check(2): localAuthenticationInfo, if enabled need to be true
 #########################################################################
 class cis_4_3:
     def __init__(self, host, domain = ''):

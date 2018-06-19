@@ -1,25 +1,17 @@
 from __future__ import print_function
 import atexit
 from pyVim.connect import SmartConnectNoSSL, Disconnect
-import pyVmomi
 from pyVmomi import vim
-import inspect
-
 
 
 from tools import cli
 
-import argparse
-import getpass
-import ssl
-
-from pyVim import connect
 
 MAX_DEPTH = 10
 v_machine = {}
 
-def setup_args():
 
+def setup_args():
     """
     Get standard connection arguments
     """
@@ -27,6 +19,7 @@ def setup_args():
     my_args = parser.parse_args()
 
     return cli.prompt_for_password(my_args)
+
 
 def printvminfo(vm):
     """
@@ -42,15 +35,16 @@ def printvminfo(vm):
         for i in vmlist:
             printvminfo(i)
     # ***************************************#
-    #***************************************#
-    #SUMMARY - contiene tutte le informazioni necessarie!!#
-    #***************************************#
+    # ***************************************#
+    # SUMMARY - contiene tutte le informazioni necessarie!!#
+    # ***************************************#
     # ***************************************#
     summary = vm.summary
     print(summary)
     print(summary.runtime.host.vm)
     v_machine[summary.config.name] = summary.config.instanceUuid
-    print(vm,' has name: ', vm.summary.config.name,' and UUID: ', vm.summary.config.instanceUuid)
+    print(vm, ' has name: ', vm.summary.config.name, ' and UUID: ', vm.summary.config.instanceUuid)
+
 
 #    print(vim.AuthorizationManager.Role)
 #    print(users.summary)
@@ -99,13 +93,13 @@ def main():
                 for perm in permessi:
                     print(perm)
                     print(perm.roleId)
-#                if hasattr(content.authorizationManager.Permission,'roleId'):
-#                    print('prova')
+        #                if hasattr(content.authorizationManager.Permission,'roleId'):
+        #                    print('prova')
         ruoli = content.authorizationManager.RetrieveRolePermissions(-1)
         print(ruoli)
     ###########################
-       #Stampa gli utenti#
-       ##sulle macchine##
+    # Stampa gli utenti#
+    ##sulle macchine##
     ###########################
     print('=========')
     print('Elenco degli utenti sulle macchine')
@@ -113,10 +107,9 @@ def main():
     utenti = (content.authorizationManager.RetrieveAllPermissions())
     print(utenti)
 
-
     ruoli2 = (content.authorizationManager.roleList)
     for p in ruoli2:
-        print('ID Role = ',p.roleId,', nome = ',p.name)
+        print('ID Role = ', p.roleId, ', nome = ', p.name)
 
     ###########################
     # Stampa gli utenti#
@@ -124,12 +117,13 @@ def main():
     print('=========')
     print('Elenco degli utenti')
     print('=========')
-#    utenti2 = content.authorizationManager.privilegeList
-    utenti2 = (content.userDirectory.RetrieveUserGroups(searchStr='', exactMatch=False, findUsers=True, findGroups=False))
+    #    utenti2 = content.authorizationManager.privilegeList
+    utenti2 = (
+        content.userDirectory.RetrieveUserGroups(searchStr='', exactMatch=False, findUsers=True, findGroups=False))
     print(utenti2, 'prova')
-#    print(content.sessionManager.sessionList)
-#    print(content.datacenter.datastore)
-          #.userDirectory.domainList)
+    #    print(content.sessionManager.sessionList)
+    #    print(content.datacenter.datastore)
+    # .userDirectory.domainList)
     datastore = content.rootFolder.childEntity
     ###########################
     # Info sul datastore#
@@ -161,7 +155,7 @@ def main():
         print("prova", ipPool, "prova")
 
     ##################
-    #Get resource pool
+    # Get resource pool
     ##################
 
     resource = data.hostFolder.childEntity
@@ -171,13 +165,15 @@ def main():
     ###########################
     # Info switch #
     ###########################
+
+
 #   NOT SUPPORTED
 #    dataSwitch = content.dvSwitchManager.QueryAvailableDvsSpec()
- #   print(dataSwitch)
+#   print(dataSwitch)
 
-    ###########################
-    # File di log #
-    ###########################
+###########################
+# File di log #
+###########################
 
 #    log = content.diagnosticManager.QueryDescriptions()
 #    print(log)

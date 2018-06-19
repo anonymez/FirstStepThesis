@@ -1,7 +1,7 @@
 from tools import cli
 
-def setup_args():
 
+def setup_args():
     """
     Get standard connection arguments
     """

@@ -1,7 +1,8 @@
-import cisSetupArgs
+import cis
 import cisConnect
 import cisHost
-import cis
+import cisSetupArgs
+
 
 def main():
     args = cisSetupArgs.setup_args()
@@ -31,7 +32,6 @@ def main():
     print("cis 7.6 esit [not scored]: "),
     print(cisHostCount[5])
     print('Security level: ' + str(secCounter) + '/' + str(keyCounter))
-
 
 
 if __name__ == "__main__":

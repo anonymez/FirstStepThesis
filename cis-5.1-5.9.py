@@ -1,24 +1,14 @@
 import atexit
 
-import sys
-from pyVim.connect import SmartConnectNoSSL, Disconnect
-import pyVmomi
+from pyVim import connect
+from pyVim.connect import Disconnect
 from pyVmomi import vim
-import inspect
+
 import cisClasses
-
-
-
 from tools import cli
 
-import argparse
-import getpass
-import ssl
-
-from pyVim import connect
 
 def setup_args():
-
     """
     Get standard connection arguments
     """
@@ -27,19 +17,19 @@ def setup_args():
 
     return cli.prompt_for_password(my_args)
 
+
 def main():
     """
     Simple command-line program for listing the virtual machines on a host.
     """
 
-
     args = setup_args()
     si = None
     try:
         si = connect.ConnectNoSSL(host=args.host,
-                               user=args.user,
-                               pwd=args.password,
-                               port=int(args.port))
+                                  user=args.user,
+                                  pwd=args.password,
+                                  port=int(args.port))
         atexit.register(Disconnect, si)
         print("No SSL Connection: warning!!")
     except vim.fault.InvalidLogin:
@@ -48,7 +38,7 @@ def main():
 
     content = si.RetrieveContent()
 
-    hostView = content.viewManager.CreateContainerView(content.rootFolder , [vim.HostSystem] ,True)
+    hostView = content.viewManager.CreateContainerView(content.rootFolder, [vim.HostSystem], True)
     viewHost = content.viewManager.viewList
     obj = [host for host in hostView.view]
     for host in obj:
@@ -58,7 +48,7 @@ def main():
         # CIS 5.1
         #####################################################################################
         hostService = configuration.serviceSystem.serviceInfo.service
-#        print(hostService)
+        #        print(hostService)
         for service in hostService:
             #####################################################################################
             # CIS 5.1
@@ -82,7 +72,7 @@ def main():
         #####################################################################################
         # CIS 5.5 - not valid: should be ignored; supported only in Virtual Center
         #####################################################################################
-#        print(host.config)
+        #        print(host.config)
 
         option = host.config.option
         for o in option:
@@ -104,6 +94,7 @@ def main():
             if o.key == "DCUI.Access":
                 print('option DCUI.Acces [cis 5.9 not scored]: '),
                 print(cisClasses.cis_5_9(o))
+
 
 #        print(configuration.serviceSystem.serviceInfo)
 

@@ -48,8 +48,8 @@ def main():
 #    print(vim.ServiceInstance.RetrieveContent(si))
 
     ###############################
-    #Get info about the system host
-    #privilege: read-only
+    # Get info about the system host
+    # privilege: read-only
     ###############################
     print("##########################################")
     print("Get info about the system host")
@@ -58,8 +58,8 @@ def main():
     print(hyp)
 
     ###############################
-    #Get inf about current user session
-    #privilege: readOnly
+    # Get inf about current user session
+    # privilege: readOnly
     ###############################
     print("##########################################")
     print("Get info about current user session")
@@ -114,7 +114,7 @@ def main():
     print(rList)
 #    print(content.userDirectory.RetrieveUserGroups(searchStr='' , exactMatch=False , findUsers=True , findGroups=False))
     for a in vim.vm.guest.GuestOperationsManager:
-        print a
+        print (a)
 
 
 if __name__ == "__main__":

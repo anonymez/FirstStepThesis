@@ -1,24 +1,14 @@
 import atexit
 
-import sys
-from pyVim.connect import SmartConnectNoSSL, Disconnect
-import pyVmomi
+from pyVim import connect
+from pyVim.connect import Disconnect
 from pyVmomi import vim
-import inspect
+
 import cisClasses
-
-
-
 from tools import cli
 
-import argparse
-import getpass
-import ssl
-
-from pyVim import connect
 
 def setup_args():
-
     """
     Get standard connection arguments
     """
@@ -27,19 +17,19 @@ def setup_args():
 
     return cli.prompt_for_password(my_args)
 
+
 def main():
     """
     Simple command-line program for listing the virtual machines on a host.
     """
 
-
     args = setup_args()
     si = None
     try:
         si = connect.ConnectNoSSL(host=args.host,
-                               user=args.user,
-                               pwd=args.password,
-                               port=int(args.port))
+                                  user=args.user,
+                                  pwd=args.password,
+                                  port=int(args.port))
         atexit.register(Disconnect, si)
         print("No SSL Connection: warning!!")
     except vim.fault.InvalidLogin:
@@ -48,7 +38,7 @@ def main():
 
     content = si.RetrieveContent()
 
-    hostView = content.viewManager.CreateContainerView(content.rootFolder , [vim.HostSystem] ,True)
+    hostView = content.viewManager.CreateContainerView(content.rootFolder, [vim.HostSystem], True)
     viewHost = content.viewManager.viewList
     obj = [host for host in hostView.view]
     for host in obj:
@@ -57,18 +47,20 @@ def main():
 
         logDir = configuration.advancedOption.setting
         for d in logDir:
-        #####################################################################################
-        # CIS 4.2
-        #####################################################################################
+            #####################################################################################
+            # CIS 4.2
+            #####################################################################################
             if d.key == "Security.PasswordQualityControl":
                 print("passQualityContr [cis 4.2]: "),
                 print(cisClasses.cis_4_2(d))
-#                print(d)
+        #                print(d)
         #####################################################################################
         # CIS 4.3
         #####################################################################################
         print('activeDomainContr [cis 4.3]: '),
         print(cisClasses.cis_4_3(host))
+
+
 #        print(configuration.authenticationManager.info)
 
 
